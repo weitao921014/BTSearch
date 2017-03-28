@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">BTSearch</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--侧边栏菜单-->
+    <string name="settings">应用设置</string>
+    <string name="changetheme">更换主题</string>
+    <string name="readme">关于及声明</string>
+
+    <string name="savttolocale">导出搜索结果</string>
 </resources>

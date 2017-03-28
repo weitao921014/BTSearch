@@ -5,6 +5,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
@@ -52,13 +53,19 @@ public class SearchResult extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
         initUI();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_searchresult, menu);
+        return true;
     }
 
     private void initUI() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         content = getIntent().getStringExtra(AppConfiguration.SEARCH_CONTENT);
-        toolbar.setTitle("搜索: " + content);
+        toolbar.setTitle(content);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         listView = (ListView) findViewById(R.id.list);
