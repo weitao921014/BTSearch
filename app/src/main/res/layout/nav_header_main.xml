@@ -21,7 +21,7 @@
             android:layout_marginTop="@dimen/margin_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="免费开源无广告"
+            android:text="open source and free"
             android:id="@+id/textView" android:textSize="18sp"/>
 
 </LinearLayout>
