@@ -7,4 +7,12 @@ public class AppConfiguration {
     public static final String SEARCH_CONTENT = "search_content";
 
     public static final boolean DEBUG = true;
+
+    /**
+     * 数据库的配置
+     */
+    public static final String DATABASE_NAME = "history";
+    public static final String DATABASE_ID = "id";
+    public static final String DATABASE_CONTENT = "content";
+    public static final String DATABASE_DATE = "date";
 }

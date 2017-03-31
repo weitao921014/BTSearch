@@ -12,7 +12,8 @@
 
     <!--        tools:openDrawer="start"-->
 
-    <RelativeLayout
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent" android:layout_height="match_parent">
 
         <android.support.v7.widget.Toolbar
@@ -32,7 +33,14 @@
 
         </android.support.v7.widget.Toolbar>
 
-    </RelativeLayout>
+        <GridView
+                android:gravity="left"
+                android:id="@+id/history"
+                android:numColumns="3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:addStatesFromChildren="false"></GridView>
+
+    </LinearLayout>
 
 
     <android.support.design.widget.NavigationView

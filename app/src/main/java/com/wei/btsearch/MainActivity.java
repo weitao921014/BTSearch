@@ -1,6 +1,7 @@
 package com.wei.btsearch;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -11,14 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.view.*;
+import android.widget.*;
 import com.wei.btsearch.components.SearchResult;
+import com.wei.btsearch.components.SettingsActivity;
 import com.wei.btsearch.configurations.AppConfiguration;
+import com.wei.btsearch.data.DataBaseOperation;
+import com.wei.btsearch.data.HistoryItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,6 +30,10 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawer;
     NavigationView navigationView;
     SearchView searchView;
+    GridView gridView;
+
+    DataBaseOperation operation;
+    List<HistoryItem> history = new ArrayList<>();
 
 
     @Override
@@ -49,11 +56,13 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        searchView = (SearchView) findViewById(R.id.search_view);
+        gridView = (GridView) findViewById(R.id.history);
 
+        searchView = (SearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                operation.insertContent(query);
                 Intent intent = new Intent(MainActivity.this, SearchResult.class);
                 intent.putExtra(AppConfiguration.SEARCH_CONTENT, query);
                 startActivity(intent);
@@ -65,6 +74,50 @@ public class MainActivity extends AppCompatActivity
                 return false;
             }
         });
+
+        operation = new DataBaseOperation(MainActivity.this);
+    }
+
+    private void getHistory() {
+        history.clear();
+        Cursor cursor = operation.queryAll();
+        while (cursor.moveToNext()) {
+            history.add(new HistoryItem(cursor.getInt(0), cursor.getString(1)));
+        }
+
+        gridView.setAdapter(new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return history.size();
+            }
+
+            @Override
+            public Object getItem(int i) {
+                return i;
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return i;
+            }
+
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+
+                view = LayoutInflater.from(MainActivity.this).inflate(R.layout.layout_history_item, null);
+
+                TextView textView = (TextView) view.findViewById(R.id.text);
+                textView.setText(history.get(i).getContent());
+                return view;
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        getHistory();
+        super.onStart();
     }
 
     @Override
@@ -84,6 +137,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.settings) {
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
 
         } else if (id == R.id.readme) {
 

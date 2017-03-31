@@ -21,6 +21,9 @@
 
         <activity android:name=".components.SearchResult">
         </activity>
+
+        <activity android:name=".components.SettingsActivity">
+        </activity>
     </application>
 
 </manifest>
