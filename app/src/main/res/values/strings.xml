@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--侧边栏菜单-->
-    <string name="settings">应用设置</string>
+    <string name="settings">引擎设置</string>
     <string name="changetheme">更换主题</string>
     <string name="readme">关于及声明</string>
 

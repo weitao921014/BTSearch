@@ -14,8 +14,8 @@ public class HistoryOpenHelper extends SQLiteOpenHelper {
 
     String DATABASE_TABLE_CREATE =
             "CREATE TABLE " + DATABASE_TABLE_NAME + " (" +
-                    AppConfiguration.DATABASE_ID + " Integer Primary Key, " +
-                    AppConfiguration.DATABASE_CONTENT + " VARCHAR(128));" ;
+                    AppConfiguration.DATABASE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    AppConfiguration.DATABASE_CONTENT + " TEXT(64) UNIQUE);" ;
 
 
     public HistoryOpenHelper(Context context) {
@@ -24,6 +24,9 @@ public class HistoryOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        if(AppConfiguration.DEBUG){
+            System.out.println(DATABASE_TABLE_CREATE);
+        }
         sqLiteDatabase.execSQL(DATABASE_TABLE_CREATE);
 
     }

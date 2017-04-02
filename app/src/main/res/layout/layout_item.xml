@@ -4,14 +4,16 @@
               android:orientation="vertical"
               android:layout_margin="8dp"
               android:padding="8dp"
-              android:background="@drawable/oval_rectangle"
+              android:background="@drawable/result_item"
               android:layout_height="wrap_content">
 
     <TextView
             android:text="ddssssssss"
             android:layout_width="match_parent"
             android:id="@+id/title"
-            android:layout_height="wrap_content" android:textSize="18sp" android:textStyle="normal|bold"/>
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="normal|bold"/>
 
     <LinearLayout android:layout_width="match_parent"
                   android:orientation="vertical"
@@ -20,10 +22,12 @@
 
         <TextView android:layout_width="wrap_content"
                   android:id="@+id/preview1"
+                  android:textSize="12sp"
                   android:text="preview1preview1preview1"
                   android:layout_height="wrap_content"/>
         <TextView android:layout_width="wrap_content"
                   android:id="@+id/preview2"
+                  android:textSize="12sp"
                   android:text="preview2preview2preview2"
                   android:layout_height="wrap_content"/>
 
@@ -35,20 +39,24 @@
         <TextView android:layout_width="wrap_content"
                   android:id="@+id/files"
                   android:text="wenjian"
+                  android:textSize="12sp"
                   android:layout_height="wrap_content"/>
         <TextView android:layout_width="wrap_content"
                   android:id="@+id/size"
                   android:text="daxiao"
+                  android:textSize="12sp"
                   android:layout_marginLeft="12dp"
                   android:layout_height="wrap_content"/>
         <TextView android:layout_width="wrap_content"
                   android:id="@+id/hot"
                   android:text="redu"
+                  android:textSize="12sp"
                   android:layout_marginLeft="12dp"
                   android:layout_height="wrap_content"/>
         <TextView android:layout_width="wrap_content"
                   android:id="@+id/data"
                   android:text="riqi"
+                  android:textSize="12sp"
                   android:layout_marginLeft="12dp"
                   android:layout_height="wrap_content"/>
     </LinearLayout>

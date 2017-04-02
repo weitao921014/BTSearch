@@ -64,8 +64,8 @@ public class ResultAdaptor extends BaseAdapter {
 
         ((TextView) view.findViewById(R.id.title)).setText(Html.fromHtml(list.get(i).title));
 
-        ((TextView) view.findViewById(R.id.files)).setText("文件数:" + list.get(i).fileCount);
-        ((TextView) view.findViewById(R.id.data)).setText("创建时间:" + list.get(i).createTime);
+        ((TextView) view.findViewById(R.id.files)).setText("件数:" + list.get(i).fileCount);
+        ((TextView) view.findViewById(R.id.data)).setText("时间:" + list.get(i).createTime);
         ((TextView) view.findViewById(R.id.hot)).setText("热度:" + list.get(i).hotIndex);
         ((TextView) view.findViewById(R.id.size)).setText("大小:" + list.get(i).filesSize);
 

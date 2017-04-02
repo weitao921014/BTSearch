@@ -2,9 +2,7 @@ package com.wei.btsearch;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +12,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
 import android.widget.*;
+import com.wei.btsearch.components.HistoryAdaptor;
 import com.wei.btsearch.components.SearchResult;
 import com.wei.btsearch.components.SettingsActivity;
 import com.wei.btsearch.configurations.AppConfiguration;
@@ -24,13 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, HistoryAdaptor.OnItemOperate {
 
     Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigationView;
     SearchView searchView;
-    GridView gridView;
+    ListView gridView;
 
     DataBaseOperation operation;
     List<HistoryItem> history = new ArrayList<>();
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        gridView = (GridView) findViewById(R.id.history);
+        gridView = (ListView) findViewById(R.id.history);
 
         searchView = (SearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -78,45 +77,24 @@ public class MainActivity extends AppCompatActivity
         operation = new DataBaseOperation(MainActivity.this);
     }
 
-    private void getHistory() {
+    private void setHistoryList() {
         history.clear();
         Cursor cursor = operation.queryAll();
         while (cursor.moveToNext()) {
             history.add(new HistoryItem(cursor.getInt(0), cursor.getString(1)));
         }
 
-        gridView.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return history.size();
-            }
+        if (AppConfiguration.DEBUG) {
+            System.out.println(history);
+        }
 
-            @Override
-            public Object getItem(int i) {
-                return i;
-            }
-
-            @Override
-            public long getItemId(int i) {
-                return i;
-            }
-
-            @Override
-            public View getView(int i, View view, ViewGroup viewGroup) {
-
-                view = LayoutInflater.from(MainActivity.this).inflate(R.layout.layout_history_item, null);
-
-                TextView textView = (TextView) view.findViewById(R.id.text);
-                textView.setText(history.get(i).getContent());
-                return view;
-            }
-        });
+        gridView.setAdapter(new HistoryAdaptor(MainActivity.this, operation, history, MainActivity.this));
 
     }
 
     @Override
     protected void onStart() {
-        getHistory();
+        setHistoryList();
         super.onStart();
     }
 
@@ -142,9 +120,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.readme) {
 
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onItemDeleted() {
+        setHistoryList();
     }
 }

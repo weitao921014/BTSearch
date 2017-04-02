@@ -20,10 +20,17 @@ public class DataBaseOperation {
     public void insertContent(String content) {
         final String SQL = "INSERT INTO " + AppConfiguration.DATABASE_NAME +
                 " (" + AppConfiguration.DATABASE_CONTENT + ") VALUES ('" + content + "');";
-        if (AppConfiguration.DEBUG){
+
+        if (AppConfiguration.DEBUG) {
             System.out.println(SQL);
         }
-        database.execSQL(SQL);
+
+        try {
+            database.execSQL(SQL);
+        } catch (Exception e) {
+            System.out.println("Insert Error");
+            e.printStackTrace();
+        }
     }
 
     public Cursor queryAll() {
@@ -36,7 +43,15 @@ public class DataBaseOperation {
     public void deleteItem(int id) {
         String SQL = "DELETE FROM " + AppConfiguration.DATABASE_NAME +
                 " WHERE " + AppConfiguration.DATABASE_ID + "=" + id + ";";
-        if (AppConfiguration.DEBUG){
+        if (AppConfiguration.DEBUG) {
+            System.out.println(SQL);
+        }
+        database.execSQL(SQL);
+    }
+
+    public void deleteAll() {
+        String SQL = "DELETE FROM " + AppConfiguration.DATABASE_NAME + ";";
+        if (AppConfiguration.DEBUG) {
             System.out.println(SQL);
         }
         database.execSQL(SQL);

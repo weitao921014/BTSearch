@@ -5,4 +5,7 @@
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
     <color name="colorPrimaryDark">#F0F0F0</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorTrans">#0FFF</color>
+    <color name="colorGray">#AAA</color>
 </resources>

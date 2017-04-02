@@ -27,4 +27,12 @@ public class HistoryItem {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "HistoryItem{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

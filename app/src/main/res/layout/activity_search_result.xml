@@ -19,34 +19,23 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <LinearLayout
-                android:id="@+id/pagebtn"
-                android:orientation="horizontal"
-                android:layout_margin="8dp"
-                android:layout_alignParentBottom="true"
-                android:layout_width="match_parent" android:layout_height="wrap_content">
-            <Button
-                    android:text="上一页"
-                    android:id="@+id/pre"
-                    android:layout_weight="1"
-                    android:layout_width="0dp" android:layout_height="wrap_content"/>
-
-            <Button
-                    android:text="下一页"
-                    android:id="@+id/next"
-                    android:layout_weight="1"
-                    android:layout_width="0dp" android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <ListView
-                android:layout_margin="8dp"
-                android:id="@+id/list"
-                android:divider="#0000"
+        <com.wei.btsearch.customviews.SwipeLoadLayout
                 android:layout_below="@+id/toolbar"
-                android:layout_above="@+id/pagebtn"
-                android:layout_width="match_parent" android:layout_height="match_parent"
-                android:dividerHeight="8dp"></ListView>
+                android:id="@+id/swipeload"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ListView
+                    android:id="@+id/list"
+                    android:padding="16dp"
+                    android:divider="#0000"
+                    android:dividerHeight="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+            </ListView>
+
+        </com.wei.btsearch.customviews.SwipeLoadLayout>
 
     </RelativeLayout>
 

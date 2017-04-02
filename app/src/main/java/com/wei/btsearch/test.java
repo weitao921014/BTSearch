@@ -15,9 +15,8 @@ public class test {
         String DATABASE_TABLE_NAME = "db";
         String DATABASE_TABLE_CREATE =
                 "CREATE TABLE " + DATABASE_TABLE_NAME + " (" +
-                        AppConfiguration.DATABASE_ID + " Integer Primary Key, " +
-                        AppConfiguration.DATABASE_CONTENT + " VARCHAR(128), " +
-                        AppConfiguration.DATABASE_DATE + " TIMESTAMP NOT NULL DEFAULT NOW());";
+                        AppConfiguration.DATABASE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                        AppConfiguration.DATABASE_CONTENT + " TEXT(64) UNIQUE);" ;
         System.out.println(DATABASE_TABLE_CREATE);
     }
 }

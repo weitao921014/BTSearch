@@ -14,36 +14,53 @@ import com.wei.btsearch.btengine.BTEngine;
 import com.wei.btsearch.btengine.BTItem;
 import com.wei.btsearch.btengine.EngCililian;
 import com.wei.btsearch.configurations.AppConfiguration;
+import com.wei.btsearch.customviews.SwipeLoadLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SearchResult extends AppCompatActivity implements View.OnClickListener {
+public class SearchResult extends AppCompatActivity implements SwipeLoadLayout.OnLoadListener {
+
     private static final String TAG = "SearchResult";
     private static final int MSG_SEARCHOK = 1;
-    private static final int MSG_SEARCHFAILD = 2;
+    private static final int MSG_SEARCH_RESULTNULL = 2;
+    private static final int MSG_NETWORK_FAILD = 3;
 
     Toolbar toolbar;
     ListView listView;
-    Button pre, next;
+    SwipeLoadLayout swipeLoadLayout;
     ProgressBar progressBar;
     String content;
     ArrayList<BTItem> list = new ArrayList<>();
-    int currentPage = 1;
+    int nextSearchPage = 1;
     BTEngine btEngine;
+
     Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
             switch (message.what) {
                 case MSG_SEARCHOK:
-                    list = (ArrayList<BTItem>) message.obj;
+                    list.addAll((ArrayList<BTItem>) message.obj);
+                    nextSearchPage += 1;
+                    int position = listView.getFirstVisiblePosition();
+                    if (AppConfiguration.DEBUG) {
+                        System.out.println("x: " + position);
+                    }
                     listView.setAdapter(new ResultAdaptor(list, SearchResult.this));
+                    listView.setSelection(position);
                     break;
-                case MSG_SEARCHFAILD:
-                    Toast.makeText(SearchResult.this, "SearchFaild", Toast.LENGTH_SHORT).show();
+                case MSG_SEARCH_RESULTNULL:
+                    Toast.makeText(SearchResult.this, "搜不到了", Toast.LENGTH_SHORT).show();
+                    break;
+                case MSG_NETWORK_FAILD:
+                    Toast.makeText(SearchResult.this, "网络错误", Toast.LENGTH_SHORT).show();
                     break;
             }
             progressBar.setVisibility(View.GONE);
+            swipeLoadLayout.setLoading(false);
+            if (AppConfiguration.DEBUG) {
+                System.out.println("handler work out");
+            }
             return true;
         }
     });
@@ -52,7 +69,7 @@ public class SearchResult extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
-        initUI();
+        init();
     }
 
     @Override
@@ -62,40 +79,48 @@ public class SearchResult extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    private void initUI() {
+    private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         content = getIntent().getStringExtra(AppConfiguration.SEARCH_CONTENT);
+        System.out.println("contetn " + content);
         toolbar.setTitle(content);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         listView = (ListView) findViewById(R.id.list);
         progressBar = (ProgressBar) findViewById(R.id.progress);
-        pre = (Button) findViewById(R.id.pre);
-        pre.setOnClickListener(this);
-        next = (Button) findViewById(R.id.next);
-        next.setOnClickListener(this);
+        swipeLoadLayout = (SwipeLoadLayout) findViewById(R.id.swipeload);
+        swipeLoadLayout.setEnabled(false);
+        swipeLoadLayout.setOnLoadListener(this);
 
         btEngine = new EngCililian(content);
+        list.clear();
+        swipeLoadLayout.requestLoadData();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        doSearch();
     }
 
     private void doSearch() {
         progressBar.setVisibility(View.VISIBLE);
+
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Message message;
-                ArrayList<BTItem> result = null;
+                ArrayList<BTItem> result;
                 try {
-                    result = btEngine.getItems(content, currentPage);
-                    System.out.println(result);
+                    if (AppConfiguration.DEBUG) {
+                        System.out.println("nextSearchPage: " + nextSearchPage);
+                    }
+
+                    result = btEngine.getItems(content, nextSearchPage);
+
                     if (result == null) {
-                        message = handler.obtainMessage(MSG_SEARCHFAILD);
+                        message = handler.obtainMessage(MSG_SEARCH_RESULTNULL);
                         handler.sendMessage(message);
                     } else {
                         message = handler.obtainMessage(MSG_SEARCHOK);
@@ -103,11 +128,10 @@ public class SearchResult extends AppCompatActivity implements View.OnClickListe
                         handler.sendMessage(message);
                     }
                 } catch (IOException e) {
-                    message = handler.obtainMessage(MSG_SEARCHFAILD);
+                    message = handler.obtainMessage(MSG_NETWORK_FAILD);
                     handler.sendMessage(message);
                     e.printStackTrace();
                 }
-
             }
         }).start();
     }
@@ -121,21 +145,9 @@ public class SearchResult extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.pre:
-                if (currentPage < 1) {
-                    currentPage = 1;
-                } else {
-                    currentPage -= 1;
-                }
-                doSearch();
-                break;
-            case R.id.next:
-                currentPage += 1;
-                doSearch();
-                break;
-        }
+    public void onLoad() {
+        doSearch();
     }
 }

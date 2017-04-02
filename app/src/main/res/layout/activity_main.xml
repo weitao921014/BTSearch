@@ -33,12 +33,16 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <GridView
+        <ListView
+                android:clickable="false"
+                android:focusable="false"
                 android:gravity="left"
+                android:listSelector="#0000"
+                android:layout_margin="16dp"
                 android:id="@+id/history"
-                android:numColumns="3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:addStatesFromChildren="false"></GridView>
+                android:layout_height="match_parent">
+        </ListView>
 
     </LinearLayout>
 
