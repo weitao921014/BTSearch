@@ -6,8 +6,13 @@ package com.wei.btsearch.configurations;
 public class AppConfiguration {
     public static final String SEARCH_CONTENT = "search_content";
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
+    /**
+     * 默认解析引擎的配置文件
+     */
+    public static String ENGINE_SHAREDPREFERENCE = "engines";
+    public static String ENGINE_DEFAULT = "engine";
     /**
      * 数据库的配置
      */

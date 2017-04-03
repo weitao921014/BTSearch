@@ -1,11 +1,14 @@
 package com.wei.btsearch;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -13,11 +16,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.*;
 import android.widget.*;
 import com.wei.btsearch.components.HistoryAdaptor;
+import com.wei.btsearch.components.ReadmeActivity;
 import com.wei.btsearch.components.SearchResult;
-import com.wei.btsearch.components.SettingsActivity;
 import com.wei.btsearch.configurations.AppConfiguration;
-import com.wei.btsearch.data.DataBaseOperation;
-import com.wei.btsearch.data.HistoryItem;
+import com.wei.btsearch.storage.DataBaseOperation;
+import com.wei.btsearch.storage.HistoryItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity
     ListView gridView;
 
     DataBaseOperation operation;
+    SharedPreferences sharedPreferences;
     List<HistoryItem> history = new ArrayList<>();
 
 
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity
                 operation.insertContent(query);
                 Intent intent = new Intent(MainActivity.this, SearchResult.class);
                 intent.putExtra(AppConfiguration.SEARCH_CONTENT, query);
+//                intent.putExtra(AppConfiguration.ENGINE_DEFAULT, sharedPreferences.getInt(AppConfiguration.ENGINE_DEFAULT, 0));
                 startActivity(intent);
                 return true;
             }
@@ -75,6 +80,8 @@ public class MainActivity extends AppCompatActivity
         });
 
         operation = new DataBaseOperation(MainActivity.this);
+        sharedPreferences = getSharedPreferences(AppConfiguration.ENGINE_SHAREDPREFERENCE, 0);
+
     }
 
     private void setHistoryList() {
@@ -115,10 +122,36 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.settings) {
-            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            final SharedPreferences preferences = sharedPreferences;
 
+            final int[] engine = {preferences.getInt(AppConfiguration.ENGINE_DEFAULT, 0)};
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("选择解析引擎")
+                    .setCancelable(true)
+                    .setSingleChoiceItems(R.array.engines, engine[0], new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            engine[0] = i;
+                            if (AppConfiguration.DEBUG) {
+                                System.out.println(engine[0] + "selected");
+                            }
+                        }
+                    })
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putInt(AppConfiguration.ENGINE_DEFAULT, engine[0]);
+                            editor.commit();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, null);
+
+            builder.create().show();
+        } else if (id == R.id.changetheme) {
+            Toast.makeText(this, "只做了一个主题，没得换了", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.readme) {
-
+            startActivity(new Intent(this, ReadmeActivity.class));
         }
         return true;
     }

@@ -6,6 +6,11 @@
     <color name="colorPrimaryDark">#F0F0F0</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="colorWhite">#FFF</color>
     <color name="colorTrans">#0FFF</color>
     <color name="colorGray">#AAA</color>
+
+    <!--Readme theme-->
+    <color name="color2">#1296db</color>
+    <color name="color1">#1296FF</color>
 </resources>

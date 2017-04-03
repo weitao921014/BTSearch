@@ -24,7 +24,7 @@
 
             <android.support.v7.widget.SearchView
                     android:id="@+id/search_view"
-                    app:iconifiedByDefault="true"
+                    app:iconifiedByDefault="false"
                     android:layout_marginLeft="@dimen/margin_normal"
                     android:layout_marginRight="@dimen/margin_normal"
                     android:layout_width="match_parent"
@@ -38,7 +38,8 @@
                 android:focusable="false"
                 android:gravity="left"
                 android:listSelector="#0000"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:id="@+id/history"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

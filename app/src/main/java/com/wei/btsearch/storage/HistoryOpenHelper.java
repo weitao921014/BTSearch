@@ -1,4 +1,4 @@
-package com.wei.btsearch.data;
+package com.wei.btsearch.storage;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

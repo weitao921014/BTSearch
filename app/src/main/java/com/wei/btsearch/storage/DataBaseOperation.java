@@ -1,4 +1,4 @@
-package com.wei.btsearch.data;
+package com.wei.btsearch.storage;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -35,7 +35,8 @@ public class DataBaseOperation {
 
     public Cursor queryAll() {
         Cursor result = database.query(AppConfiguration.DATABASE_NAME,
-                null, null, null, null, null, null);
+                null, null, null, null, null,
+                AppConfiguration.DATABASE_ID + " DESC");
 
         return result;
     }

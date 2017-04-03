@@ -1,4 +1,4 @@
-package com.wei.btsearch.data;
+package com.wei.btsearch.storage;
 
 /**
  * Created by wei on 17-3-31.

@@ -12,88 +12,78 @@ import java.util.regex.Pattern;
  */
 public class EngBTDao extends BTEngine {
 //    private String url="http://www.btdao.biz/list/[name]-s1d-[index].html";
+//    http://www.btdao5.com/list/11-s1d-1.html
 
+    String content;
+
+    public EngBTDao(String content) {
+        this.content = content;
+    }
 
     @Override
     public ArrayList<BTItem> getItems(String search, int index) {
-        String url = "http://www.btdao.biz/list/" + search + "-s1d-" + index + ".html";
-        ArrayList<BTItem> list=new ArrayList<>();
+        ArrayList<BTItem> list = new ArrayList<>();
+
         try {
-            String webpage = HttpUtils.getURLString(url);
-            Pattern pattern = Pattern.compile("<li>.*?</li>",Pattern.DOTALL);
-            Matcher matcher = pattern.matcher(webpage);
-            while (matcher.find()){
-                list.add(getItem(matcher.group()));
+            String url = "http://www.btdao5.com/list/" + content + "-s1d-" + index + ".html";
+            System.out.println(url);
+            String urlResult = HttpUtils.getURLStringByOk(url);
+
+            Pattern pattern = Pattern.compile("<li>.*?</li>", Pattern.DOTALL);
+            Matcher matcher = pattern.matcher(urlResult);
+            while (matcher.find()) {
+                final BTItem item = getItem(matcher.group());
+                if (item != null) list.add(item);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return list;
     }
 
-    public static BTItem getItem(String result) {
-        Matcher matcher;
-        Pattern pattern;
+    private BTItem getItem(String str) {
+        BTItem item = null;
+        final Pattern patternItem = Pattern.compile(
+                "<a title=[\\D\\d]*?>([\\D\\d]*?)</a>" + "[\\D\\d]*" +
+                        "<dt>大小:<span>([\\D\\d]*?)</span>" + "[\\D\\d]*" +
+                        "文件数:<span>([\\D\\d]*?)</span>" + "[\\D\\d]*" +
+                        "创建日期:<span>([\\D\\d]*?)</span>" + "[\\D\\d]*" +
+                        "热度:<span>([\\D\\d]*?)</span>" + "[\\D\\d]*" +
+                        "(magnet:[\\D\\d&&[^\"]]*)" + "[\\D\\d]*" +
+                        "(thunder:[\\D\\d&&[^\"]]*)"
+        );
+        final Pattern patternShortcut = Pattern.compile("<div class=\"item-list\">([\\D\\d]*?)</div>");
+        final Matcher matcherItem = patternItem.matcher(str);
+        final Matcher matcherShortcut = patternShortcut.matcher(str);
 
-        String title = "";
-        String big = "";
-        String files = "";
-        String date = "";
-        String hot = "";
-        String magnet = "";
-        String thunder = "";
+        final String title;
+        final String size;
+        final String count;
+        final String date;
+        final String hot;
+        final String magnet;
+        final String thunder;
+        final String shortcut;
 
-        pattern = Pattern.compile("<a title=\".*?\"");
-        matcher = pattern.matcher(result);
-        if (matcher.find()) {
-            title = matcher.group();
-            title = title.substring(9);
+        if (matcherItem.find()) {
+            title = matcherItem.group(1).replaceAll("<span class=[\\D\\d]*?</script>", "")
+                    .replace("<span class=\"mhl\">", "<font color='#FF0000'>")
+                    .replace("</span>", "</font>");
+            size = matcherItem.group(2);
+            count = matcherItem.group(3);
+            date = matcherItem.group(4);
+            hot = matcherItem.group(5);
+            magnet = matcherItem.group(6);
+            thunder = matcherItem.group(7);
+            StringBuilder shortcutBuider = new StringBuilder("");
+            while (matcherShortcut.find()) {
+                shortcutBuider.append(matcherShortcut.group(1).replaceAll("<a class=[\\D\\d]*?</script>", "")
+                        + "\t\n");
+            }
+            shortcut = shortcutBuider.toString();
+            item = new BTItem(title, shortcut, count, size, date, hot, magnet, thunder);
         }
-
-        pattern = Pattern.compile("大小:<span>.*?<");
-        matcher = pattern.matcher(result);
-        if (matcher.find()) {
-            big = matcher.group();
-            big = big.substring(9, big.length() - 1);
-        }
-
-        pattern = Pattern.compile("件数:<span>.*?<");
-        matcher = pattern.matcher(result);
-        if (matcher.find()) {
-            files = matcher.group();
-            files = files.substring(9, files.length() - 1);
-        }
-
-        pattern = Pattern.compile("日期:<span>.*?<");
-        matcher = pattern.matcher(result);
-        if (matcher.find()) {
-            date = matcher.group();
-            date = date.substring(9, date.length() - 1);
-        }
-
-        pattern = Pattern.compile("热度:<span>.*?<");
-        matcher = pattern.matcher(result);
-        if (matcher.find()) {
-            hot = matcher.group();
-            hot = hot.substring(9, hot.length() - 1);
-        }
-
-        pattern = Pattern.compile("magnet[\\D\\d&&[^\"]]*", Pattern.DOTALL);
-        matcher = pattern.matcher(result);
-        if (matcher.find()) {
-            magnet = matcher.group();
-        }
-
-        pattern = Pattern.compile("thunder[\\D\\d&&[^\"]]*");
-        matcher = pattern.matcher(result);
-        if (matcher.find()) {
-            thunder = matcher.group();
-        }
-
-        return new BTItem(title, null, files, big, date, hot, magnet, thunder);
+        return item;
     }
-
-
 }

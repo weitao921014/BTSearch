@@ -5,7 +5,7 @@ package com.wei.btsearch.btengine;
  */
 public class BTItem {
     public String title;
-    public String[] fileShortcut;
+    public String fileShortcut;
     public String fileCount;
     public String filesSize;
     public String createTime;
@@ -13,7 +13,7 @@ public class BTItem {
     public String magnetUrl;
     public String thunderUrl;
 
-    public BTItem(String title, String[] fileShortcut, String fileCount, String filesSize, String createTime, String hotIndex, String magnetUrl, String thunderUrl) {
+    public BTItem(String title, String fileShortcut, String fileCount, String filesSize, String createTime, String hotIndex, String magnetUrl, String thunderUrl) {
         this.title = title;
         this.fileShortcut = fileShortcut;
         this.fileCount = fileCount;
@@ -32,11 +32,11 @@ public class BTItem {
         this.title = title;
     }
 
-    public String[] getFileShortcut() {
+    public String getFileShortcut() {
         return fileShortcut;
     }
 
-    public void setFileShortcut(String[] fileShortcut) {
+    public void setFileShortcut(String fileShortcut) {
         this.fileShortcut = fileShortcut;
     }
 

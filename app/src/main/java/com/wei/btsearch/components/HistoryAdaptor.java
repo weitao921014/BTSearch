@@ -7,12 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import com.wei.btsearch.MainActivity;
 import com.wei.btsearch.R;
 import com.wei.btsearch.configurations.AppConfiguration;
-import com.wei.btsearch.data.DataBaseOperation;
-import com.wei.btsearch.data.HistoryItem;
+import com.wei.btsearch.storage.DataBaseOperation;
+import com.wei.btsearch.storage.HistoryItem;
 
 import java.util.List;
 
@@ -57,13 +57,13 @@ public class HistoryAdaptor extends BaseAdapter {
 
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
-        if (AppConfiguration.DEBUG){
-            System.out.println("get item "+i);
+        if (AppConfiguration.DEBUG) {
+            System.out.println("get item " + i);
         }
 
         view = LayoutInflater.from(context).inflate(R.layout.layout_history_item, null);
         TextView text = (TextView) view.findViewById(R.id.text);
-        TextView delete = (TextView) view.findViewById(R.id.delete);
+        ImageButton delete = (ImageButton) view.findViewById(R.id.delete);
 
         if (i == (history.size())) {
             delete.setVisibility(View.GONE);

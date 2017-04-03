@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:layout_margin="8dp"
-              android:padding="8dp"
+              android:layout_margin="@dimen/dp_large"
+              android:padding="@dimen/dp_medium"
               android:background="@drawable/result_item"
-              android:layout_height="wrap_content">
+>
 
     <TextView
             android:text="ddssssssss"
@@ -15,80 +16,69 @@
             android:textSize="14sp"
             android:textStyle="normal|bold"/>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:orientation="vertical"
-                  android:layout_marginTop="4dp"
-                  android:layout_height="wrap_content">
 
-        <TextView android:layout_width="wrap_content"
-                  android:id="@+id/preview1"
-                  android:textSize="12sp"
-                  android:text="preview1preview1preview1"
-                  android:layout_height="wrap_content"/>
-        <TextView android:layout_width="wrap_content"
-                  android:id="@+id/preview2"
-                  android:textSize="12sp"
-                  android:text="preview2preview2preview2"
-                  android:layout_height="wrap_content"/>
+    <TextView android:layout_width="wrap_content"
+              android:id="@+id/preview"
+              android:textSize="12sp"
+              android:text="preview1preview1preview1"
+              android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+
+    <TextView android:layout_width="wrap_content"
+              android:id="@+id/details"
+              android:text="wenjian"
+              android:textSize="12sp"
+              android:textStyle="normal|bold"
+              android:layout_height="wrap_content"/>
+
+
     <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
                   android:orientation="horizontal"
-                  android:layout_marginTop="4dp"
-                  android:layout_height="wrap_content">
-        <TextView android:layout_width="wrap_content"
-                  android:id="@+id/files"
-                  android:text="wenjian"
-                  android:textSize="12sp"
-                  android:layout_height="wrap_content"/>
-        <TextView android:layout_width="wrap_content"
-                  android:id="@+id/size"
-                  android:text="daxiao"
-                  android:textSize="12sp"
-                  android:layout_marginLeft="12dp"
-                  android:layout_height="wrap_content"/>
-        <TextView android:layout_width="wrap_content"
-                  android:id="@+id/hot"
-                  android:text="redu"
-                  android:textSize="12sp"
-                  android:layout_marginLeft="12dp"
-                  android:layout_height="wrap_content"/>
-        <TextView android:layout_width="wrap_content"
-                  android:id="@+id/data"
-                  android:text="riqi"
-                  android:textSize="12sp"
-                  android:layout_marginLeft="12dp"
-                  android:layout_height="wrap_content"/>
-    </LinearLayout>
+                  android:gravity="right"
+                  android:clickable="false"
+                  android:paddingRight="@dimen/dp_large"
+                  android:layout_marginTop="@dimen/dp_low"
+    >
 
-
-    <LinearLayout android:layout_width="match_parent"
-                  android:orientation="horizontal"
-                  android:layout_marginTop="0dp"
-                  android:layout_height="wrap_content">
-        <Button
-                android:gravity="center"
-
+        <TextView
+                android:textColor="@color/colorWhite"
                 android:id="@+id/copymagnet"
                 android:text="磁力链"
-                android:padding="2dp"
+                android:clickable="true"
+                android:paddingLeft="@dimen/dp_medium"
+                android:paddingRight="@dimen/dp_medium"
+                android:paddingTop="@dimen/dp_low"
+                android:paddingBottom="@dimen/dp_low"
+                android:background="@drawable/oval_rectangle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" android:textSize="14sp"/>
-        <Button
+        <TextView
+                android:textColor="@color/colorWhite"
                 android:id="@+id/copythunder"
                 android:text="迅雷"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" android:elevation="0dp" android:textAllCaps="false"
-        />
-        <Button android:layout_width="0dp"
-                android:layout_weight="1"
-
+                android:clickable="true"
+                android:layout_marginLeft="@dimen/dp_large"
+                android:paddingLeft="@dimen/dp_medium"
+                android:paddingRight="@dimen/dp_medium"
+                android:paddingTop="@dimen/dp_low"
+                android:paddingBottom="@dimen/dp_low"
+                android:background="@drawable/oval_rectangle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:textColor="@color/colorWhite"
                 android:id="@+id/open"
                 android:text="打开"
-
+                android:clickable="true"
+                android:layout_marginLeft="@dimen/dp_large"
+                android:paddingLeft="@dimen/dp_medium"
+                android:paddingRight="@dimen/dp_medium"
+                android:paddingTop="@dimen/dp_low"
+                android:paddingBottom="@dimen/dp_low"
+                android:background="@drawable/oval_rectangle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
     </LinearLayout>

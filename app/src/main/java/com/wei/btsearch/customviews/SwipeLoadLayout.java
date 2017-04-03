@@ -28,6 +28,7 @@ public class SwipeLoadLayout extends SwipeRefreshLayout implements AbsListView.O
     private int mYDown;
     private int mLastY;
     private boolean isLoading = false;
+    private boolean isFinished = false;
 
     public SwipeLoadLayout(Context context) {
         this(context, null);
@@ -55,7 +56,7 @@ public class SwipeLoadLayout extends SwipeRefreshLayout implements AbsListView.O
             View childView = getChildAt(0);
             if (childView instanceof ListView) {
                 mListView = (ListView) childView;
-                mListView.setOnScrollListener(this);
+
                 if (AppConfiguration.DEBUG) {
                     System.out.println("find listview");
                 }
@@ -65,30 +66,33 @@ public class SwipeLoadLayout extends SwipeRefreshLayout implements AbsListView.O
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        final int action = event.getAction();
 
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                mYDown = (int) event.getRawY();
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                mLastY = (int) event.getRawY();
-                break;
-
-            case MotionEvent.ACTION_UP:
-                if (canLoad()) {
-                    loadData();
-                }
-                break;
-            default:
-                break;
-        }
-
-        if (isLoading) {
-            return true;
-        } else
+        if (isFinished) {
+            if (AppConfiguration.DEBUG) {
+                System.out.println("because search is finished, so don't search anymore");
+            }
             return super.dispatchTouchEvent(event);
+        } else {
+            final int action = event.getAction();
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    mYDown = (int) event.getRawY();
+                    break;
+
+                case MotionEvent.ACTION_MOVE:
+                    mLastY = (int) event.getRawY();
+                    break;
+
+                case MotionEvent.ACTION_UP:
+                    if (canLoad()) {
+                        loadData();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return super.dispatchTouchEvent(event);
+        }
     }
 
 
@@ -125,6 +129,10 @@ public class SwipeLoadLayout extends SwipeRefreshLayout implements AbsListView.O
         isLoading = loading;
     }
 
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
+
 
     public void setOnLoadListener(OnLoadListener loadListener) {
         mOnLoadListener = loadListener;
@@ -145,29 +153,5 @@ public class SwipeLoadLayout extends SwipeRefreshLayout implements AbsListView.O
             loadData();
         }
     }
-
-//    /**
-//     * 设置刷新
-//     */
-//    public static void setRefreshing(SwipeRefreshLayout refreshLayout, boolean refreshing, boolean notify) {
-//        Class<? extends SwipeRefreshLayout> refreshLayoutClass = refreshLayout
-//                .getClass();
-//        if (refreshLayoutClass != null) {
-//
-//            try {
-//                Method setRefreshing = refreshLayoutClass.getDeclaredMethod(
-//                        "setRefreshing", boolean.class, boolean.class);
-//                setRefreshing.setAccessible(true);
-//                setRefreshing.invoke(refreshLayout, refreshing, notify);
-//            } catch (NoSuchMethodException e) {
-//                e.printStackTrace();
-//            } catch (IllegalAccessException e) {
-//                e.printStackTrace();
-//            } catch (InvocationTargetException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-//
 
 }

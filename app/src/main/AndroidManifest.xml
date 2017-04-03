@@ -3,7 +3,7 @@
           package="com.wei.btsearch">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
             android:allowBackup="true"
@@ -18,11 +18,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity android:name=".components.SearchResult">
         </activity>
-
         <activity android:name=".components.SettingsActivity">
+        </activity>
+        <activity
+                android:theme="@style/ReadmeTheme"
+                android:name=".components.ReadmeActivity">
         </activity>
     </application>
 

@@ -7,7 +7,7 @@
         <item
                 android:id="@+id/save_to_loacle"
                 android:icon="@drawable/save_to_locale0"
-                android:title="@string/savttolocale" app:showAsAction="withText"/>
+                android:title="@string/savetolocale" app:showAsAction="withText"/>
 
 
     </group>

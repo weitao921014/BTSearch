@@ -4,17 +4,17 @@
     <group android:checkableBehavior="none">
         <item
                 android:id="@+id/settings"
-                android:icon="@drawable/settings"
+
                 android:title="@string/settings"/>
 
         <item
                 android:id="@+id/changetheme"
-                android:icon="@drawable/changetheme"
+
                 android:title="@string/changetheme"/>
 
         <item
                 android:id="@+id/readme"
-                android:icon="@drawable/about"
+
                 android:title="@string/readme"/>
 
     </group>

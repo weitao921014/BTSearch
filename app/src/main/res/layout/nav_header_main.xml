@@ -4,24 +4,31 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:padding="16dp"
-        android:background="@drawable/side_nav_bar"
+        android:padding="@dimen/dp_xlarge"
+        android:background="@color/colorGray"
         android:orientation="vertical"
         android:gravity="bottom">
 
-    <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="@dimen/margin_normal"
-            app:srcCompat="@drawable/header_icon"
-            android:id="@+id/imageView"/>
-
-
+    <!--<ImageView-->
+    <!--android:layout_width="60dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_marginLeft="@dimen/margin_normal"-->
+    <!--app:srcCompat="@drawable/header_icon"-->
+    <!--android:id="@+id/imageView"/>-->
     <TextView
-            android:layout_marginTop="@dimen/margin_normal"
+            android:text="BTSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="open source and free"
-            android:id="@+id/textView" android:textSize="18sp"/>
+            android:textStyle="normal|bold"
+            android:textSize="36sp"/>
+
+    <TextView
+            android:layout_marginTop="@dimen/dp_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="一款开源免费无广告的BT搜索工具"
+            android:id="@+id/textView"
+            android:textSize="14sp"/>
 
 </LinearLayout>

@@ -9,5 +9,32 @@
     <string name="changetheme">更换主题</string>
     <string name="readme">关于及声明</string>
 
-    <string name="savttolocale">导出搜索结果</string>
+    <string name="savetolocale">导出当前结果</string>
+
+    <string-array name="saveitems">
+        <item>标题</item>
+        <item>详细信息</item>
+        <item>磁力链地址</item>
+        <item>迅雷地址(如果包含)</item>
+    </string-array>
+
+    <!--1cililian 2bt岛-->
+    <string-array name="engines">
+        <item>解析引擎1</item>
+        <item>解析引擎2</item>
+    </string-array>
+
+
+    <string name="readmeContent">
+        <b>
+            <u>此APP仅供学习交流，严禁用于任何其他用途，使用中请严格准守国家相关法律法规，并自行承担相应的责任！</u>
+        </b>
+        \n\n
+        APP仅是对现有引擎数据的解析，如果无意中侵犯了您的权益，请联系作者，以进行修改。\n\n
+        <b>特点：</b>\n
+        <i>免费开源无广告</i>\n
+        <i>较快的解析速度</i>\n
+        <i>本地导出结果</i>\n
+        源码地址: github.com/weitao921014
+    </string>
 </resources>
